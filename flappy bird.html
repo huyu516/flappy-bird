@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>bird</title>
+	<script type="text/javascript" src="js/jquery-1.11.3.js" ></script>
+	<style>
+	    body {margin:0px;}
+		#gamezone {width:600px;height:400px;background:#e2f4d3}
+	    #bird {position:absolute;left:200px;top:200px;z-index:200;width:50px;height:50px;}
+		#tip {width:600px;text-align:center;}
+		.pillar {position:absolute;left:600px;z-index:100;width:50px;background-image:url(img/pillar.png);background-repeat: repeat-y;} 
+	</style>
+</head>
+<body>
+	<div id="gamezone" >
+		<img id="bird" src="img/birdUp.png" />
+	</div>
+	<div id="tip" >按方向键"上"开始游戏</div>
+	<script type="text/javascript">
+        
+	    var zoneHeight = jQuery("#gamezone").height();
+	    var zoneWidth  = jQuery("#gamezone").width();
+	    var bird       = jQuery("#bird");
+	    var birdWidth  = bird.width();
+	    var birdHeight = bird.height();
+		
+		var pilPeriod    = 200;   // 控制柱子出现的频率, 值越小出现柱子越快 
+	    var pilGapHeigth = 150;   // 一对柱子之间空隙的高度
+	    var flyUpkeyCode = 38;    // 鸟向上飞的按键
+		
+		var time = 0;
+		
+		// 游戏的核心控制"线程"
+		var gameHanlder = setInterval(function() {
+			// 每隔一段时间创建一对柱子
+			if( time++ % pilPeriod == 0 ) {
+				var pilHtml = "<div class='pillar' />";
+				
+				// 上面的柱子
+				var top1    = 0;
+				var height1 = (zoneHeight - pilGapHeigth) * Math.random();
+				jQuery(pilHtml).css({"top": top1, "height": height1}).appendTo("body").animate({left: 0}, 3000, function() {
+					this.remove();
+				});	
+
+				// 下面的柱子
+				var top2    = top1 + height1 + pilGapHeigth;
+				var height2 = zoneHeight - top2;
+				jQuery(pilHtml).css({"top": top2, "height": height2}).appendTo("body").animate({left: 0}, 3000, function() {
+					this.remove();
+				});	
+			};
+
+			// 判断如果鸟和任何一个柱子碰到一起则让游戏结束
+			jQuery(".pillar").each(function() {
+				var pillar     = jQuery(this);
+				var pilLeft    = pillar.position().left;
+				var pilTop     = pillar.position().top;
+				var pilRight   = pillar.width() + pilLeft;
+				var pilBottom  = pillar.height() + pilTop;
+				
+				var birdLeft   = bird.position().left;
+				var birdTop    = bird.position().top;
+				var birdRight  = birdWidth + birdLeft;
+				var birdBottom = birdHeight + birdTop;
+
+				if(!(birdLeft > pilRight || pilLeft > birdRight || birdBottom < pilTop || pilBottom < birdTop)) {
+					clearInterval(gameHanlder);
+					alert("你的得分是：" + time);
+                    window.location.reload();
+				}
+			});
+			
+		}, 10);
+
+		// 绑定按键的点击事件，点下按键鸟往上飞，松开按键鸟往上飞
+		jQuery(document).keydown(function(event){
+		 	if(event.keyCode == flyUpkeyCode) { 
+		 		bird.stop().attr("src", "img/birdUp.png").animate({top: 0}, "slow");
+		 	}
+		}).keyup(function (event){
+			if(event.keyCode == flyUpkeyCode) { 
+		 		bird.stop().attr("src", "img/birdDown.png").animate({top: zoneHeight - birdHeight}, "slow");
+		 	}
+		});
+
+	</script>
+</body>
+</html>
