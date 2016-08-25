@@ -75,7 +75,7 @@
 				if(!(birdLeft > pilRight || pilLeft > birdRight || birdBottom < pilTop || pilBottom < birdTop)) {
 					clearInterval(gameHanlder);
 					alert("你的得分是：" + time);
-	            window.location.reload();
+	                                window.location.reload();
 				}
 			});
 			
@@ -85,7 +85,6 @@
 		jQuery(document).keydown(function(event){
 		 	if(event.keyCode == flyUpkeyCode) { 
 				isStart = true;
-				
 		 		bird.stop().attr("src", "img/birdUp.png").animate({top: 0}, birdFlyUpSpeed);
 		 	}
 		}).keyup(function (event){
