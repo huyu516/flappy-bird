@@ -24,12 +24,14 @@
 	    var bird       = jQuery("#bird");
 	    var birdWidth  = bird.width();
 	    var birdHeight = bird.height();
-		
+				
+		var birdFlyUpSpeed = 500;     // 控制鸟上飞的速度，值越小升的越快
+		var birdFlyDownSpeed = 1500;  // 控制鸟下飞的速度，值越小降的越快
 		var pilPeriod    = 300;   // 控制柱子出现的频率, 值越小出现柱子越快 
 	    var pilGapHeigth = 150;   // 一对柱子之间空隙的高度
 	    var flyUpkeyCode = 38;    // 鸟向上飞的按键
-		var isStart = false;      // 控制游戏是否开始
 		
+		var isStart = false;      // 控制游戏是否开始
 		var time = 0;
 				
 		// 游戏的核心控制"线程"
@@ -84,11 +86,11 @@
 		 	if(event.keyCode == flyUpkeyCode) { 
 				isStart = true;
 				
-		 		bird.stop().attr("src", "img/birdUp.png").animate({top: 0}, "slow");
+		 		bird.stop().attr("src", "img/birdUp.png").animate({top: 0}, birdFlyUpSpeed);
 		 	}
 		}).keyup(function (event){
 			if(event.keyCode == flyUpkeyCode) { 
-		 		bird.stop().attr("src", "img/birdDown.png").animate({top: zoneHeight - birdHeight}, "slow");
+		 		bird.stop().attr("src", "img/birdDown.png").animate({top: zoneHeight - birdHeight}, birdFlyDownSpeed);
 		 	}
 		});
 
