@@ -27,9 +27,9 @@
 				
 	        var birdFlyUpSpeed = 500;     // 控制鸟上飞的速度，值越小升的越快
 	        var birdFlyDownSpeed = 1500;  // 控制鸟下飞的速度，值越小降的越快
-                var pilPeriod    = 300;       // 控制柱子出现的频率, 值越小出现柱子越快 
+            var pilPeriod    = 200;       // 控制柱子出现的频率, 值越小出现柱子越快 
 	        var pilGapHeigth = 150;       // 一对柱子之间空隙的高度
-	        var flyUpkeyCode = 38;       // 鸟向上飞的按键
+	        var flyUpkeyCode = 38;        // 鸟向上飞的按键
 		
 	        var isStart = false;      // 控制游戏是否开始
 	        var time = 0;
@@ -47,14 +47,14 @@
 				// 上面的柱子
 				var top1    = 0;
 				var height1 = (zoneHeight - pilGapHeigth) * Math.random();
-				jQuery(pilHtml).css({"top": top1, "height": height1}).appendTo("body").animate({left: 0}, 3000, function() {
+				jQuery(pilHtml).css({"top": top1, "height": height1}).appendTo("body").animate({left: -50}, 3000, function() {
 					this.remove();
 				});	
 	
 				// 下面的柱子
 				var top2    = top1 + height1 + pilGapHeigth;
 				var height2 = zoneHeight - top2;
-				jQuery(pilHtml).css({"top": top2, "height": height2}).appendTo("body").animate({left: 0}, 3000, function() {
+				jQuery(pilHtml).css({"top": top2, "height": height2}).appendTo("body").animate({left: -50}, 3000, function() {
 					this.remove();
 				});	
 			};
